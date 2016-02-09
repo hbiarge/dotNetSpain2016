@@ -7,8 +7,6 @@ using Microsoft.AspNet.Authentication.Cookies;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.StaticFiles;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Authorization
@@ -67,6 +65,12 @@ namespace Authorization
 
                 options.AutomaticAuthenticate = true;
                 options.AutomaticChallenge = true;
+            });
+
+            app.UseClaimsTransformation(principal =>
+            {
+                principal.Identities.First().AddClaim(new Claim("status", "junior"));
+                return Task.FromResult(principal);
             });
 
             app.UseStaticFiles();

@@ -29,7 +29,7 @@ namespace Authorization.Controllers
         }
 
         // GET: Products/Details/5
-        public async Task<IActionResult> Details(int? id, decimal? discount)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id.HasValue == false)
             {
@@ -43,34 +43,35 @@ namespace Authorization.Controllers
                 return HttpNotFound();
             }
 
-            return View(new EditProductViewModel { Product = product, Discount = discount ?? 0 });
+            return View(new EditProductViewModel
+            {
+                Product = product,
+                Discount = 5
+            });
         }
 
         // POST: Products/Discount/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Discount(int? id, decimal discount)
+        public async Task<IActionResult> Discount(ProductDiscountViewModel model)
         {
-            if (discount < 1 || discount >= 100)
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction("Details", new { discount = discount });
+                return RedirectToAction("Details", new { model.Id });
             }
 
-            if (id.HasValue == false)
-            {
-                return HttpNotFound();
-            }
-
-            Product product = await _store.GetByIdAsync(id.Value);
+            Product product = await _store.GetByIdAsync(model.Id);
 
             if (product == null)
             {
                 return HttpNotFound();
             }
 
-            if (await _authz.AuthorizeAsync(User, product, ProductOperations.GiveDiscount(discount)))
+            var operation = ProductOperations.GiveDiscount(model.Discount);
+
+            if (await _authz.AuthorizeAsync(User, product, operation))
             {
-                product.Price -= discount;
+                product.Price -= model.Discount;
                 await _store.UpdateAsync(product);
                 return RedirectToAction("Index");
             }

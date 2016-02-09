@@ -43,7 +43,7 @@ namespace Authorization.Controllers
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, "Hugo"),
-                new Claim("department", "sales"),
+                new Claim("department", "sales")
             };
 
             await HttpContext.Authentication.SignInAsync(

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Authorization.Models;
+﻿using Authorization.Models;
 
 namespace Authorization.ViewModels.Products
 {
@@ -7,7 +6,6 @@ namespace Authorization.ViewModels.Products
     {
         public Product Product { get; set; }
 
-        [Range(1, 100)]
-        public decimal Discount { get; set; } = 0;
+        public decimal Discount { get; set; }
     }
 }

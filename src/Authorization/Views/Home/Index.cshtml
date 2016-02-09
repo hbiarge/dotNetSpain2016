@@ -2,17 +2,30 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="row">
-    <div class="col-md-6">
-        <h2>Value from Configuration</h2>
-        <h4>
-            Base url: <span>@ViewData["BaseUri"]</span>
-        </h4>
+<h2>User information</h2>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Claims
+        </div>
+        <div class="panel-body">
+            <dl>
+                @foreach (var claim in User.Claims)
+                {
+                    <dt>@claim.Type</dt>
+                    <dd>@claim.Value</dd>
+                }
+            </dl>
+        </div>
     </div>
-    <div class="col-md-6">
-        <h2>Secret from Configuration</h2>
-        <h4>
-            Secret: <span>@ViewData["Secret"]</span>
-        </h4>
+}
+else
+{
+    <div class="panel panel-default">
+        <div class="panel-body">
+            The user is not authenticated
+        </div>
     </div>
-</div>
+}
