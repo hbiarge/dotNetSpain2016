@@ -1,11 +1,12 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
-using Authorization.ViewModels.Account;
+using Authentication.Cookies.ViewModels.Account;
 using Microsoft.AspNet.Authentication.Cookies;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 
-namespace Authorization.Controllers
+namespace Authentication.Cookies.Controllers
 {
     [Authorize]
     public class AccountController : Controller
@@ -26,8 +27,6 @@ namespace Authorization.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
-            ViewData["ReturnUrl"] = returnUrl;
-
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -41,8 +40,7 @@ namespace Authorization.Controllers
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.Name, "Hugo"),
-                new Claim("department", "sales")
+                new Claim(ClaimTypes.Name, "Hugo")
             };
 
             await HttpContext.Authentication.SignInAsync(
