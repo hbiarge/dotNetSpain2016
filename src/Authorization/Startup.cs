@@ -28,10 +28,14 @@ namespace Authorization
                     policy.RequireAuthenticatedUser();
                     policy.RequireClaim("department", "sales");
                 });
+                options.AddPolicy(Policies.Over21, policy =>
+                {
+                    policy.Requirements.Add(new MinimumAgeRequirement(21));
+                });
             });
 
             // register resource authorization handlers
-            services.AddTransient<IAuthorizationHandler, ProductAuthorizationHandler>();
+            services.AddSingleton<IAuthorizationHandler, ProductAuthorizationHandler>();
 
             // register services
             services.AddSingleton<IProductsStore, InMemoryProductsStore>();
