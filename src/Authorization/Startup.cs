@@ -28,7 +28,7 @@ namespace Authorization
                     policy.RequireAuthenticatedUser();
                     policy.RequireClaim("department", "sales");
                 });
-                options.AddPolicy(Policies.Over18, policy =>
+                options.AddPolicy(Policies.Over18Years, policy =>
                 {
                     policy.Requirements.Add(new MinimumAgeRequirement(18));
                 });
@@ -73,7 +73,7 @@ namespace Authorization
 
             app.UseClaimsTransformation(principal =>
             {
-                principal.Identities.First().AddClaim(new Claim("status", "junior"));
+                principal.Identities.First().AddClaim(new Claim("status", "senior"));
                 return Task.FromResult(principal);
             });
 

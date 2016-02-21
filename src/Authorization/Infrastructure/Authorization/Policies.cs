@@ -4,6 +4,6 @@
     {
         public const string Sales = "Sales";
 
-        public const string Over18 = "Over21Only";
+        public const string Over18Years = "Over18Years";
     }
 }

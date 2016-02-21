@@ -7,7 +7,7 @@
 <h2>Details</h2>
 
 <div class="row">
-    <div class="col-md-7">
+    <div class="col-md-7 col-sm-6">
         <div>
             <h4>Product</h4>
             <hr />
@@ -43,14 +43,14 @@
             <a asp-action="Index">Back to List</a>
         </p>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-5 col-sm-6">
         <h4>Apply discount</h4>
         <hr />
         <form class="form-inline" asp-action="Discount">
             <input type="hidden" name="id" value="@Model.Product.Id" />
             <div class="form-group">
                 <label asp-for="Discount" class="control-label"></label>
-                <input asp-for="Discount" class="form-control" />
+                <input asp-for="Discount" class="form-control input-sm" />
                 <span asp-validation-for="Discount" class="text-danger" />
             </div>
             <button type="submit" class="btn btn-primary">Apply</button>

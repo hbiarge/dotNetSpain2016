@@ -34,7 +34,6 @@ namespace Authorization.Infrastructure.Authorization
 
             if (calculatedAge >= _minimumAge)
             {
-                // Logic to validate requirement
                 context.Succeed(requirement);
             }
         }

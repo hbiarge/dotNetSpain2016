@@ -45,9 +45,14 @@ namespace Authorization.Controllers
                 new Claim("department", "sales")
             };
 
+            var principal = new ClaimsPrincipal(
+                new ClaimsIdentity(
+                    claims,
+                    CookieAuthenticationDefaults.AuthenticationScheme));
+
             await HttpContext.Authentication.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(new ClaimsIdentity(claims, "custom")));
+                principal);
 
             if (string.IsNullOrEmpty(returnUrl))
             {

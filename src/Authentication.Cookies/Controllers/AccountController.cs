@@ -44,9 +44,14 @@ namespace Authentication.Cookies.Controllers
                 new Claim(ClaimTypes.Name, "Hugo")
             };
 
+            var principal = new ClaimsPrincipal(
+                new ClaimsIdentity(
+                    claims,
+                    CookieAuthenticationDefaults.AuthenticationScheme));
+
             await HttpContext.Authentication.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(new ClaimsIdentity(claims, "custom")));
+                principal);
 
             if (string.IsNullOrEmpty(returnUrl))
             {
