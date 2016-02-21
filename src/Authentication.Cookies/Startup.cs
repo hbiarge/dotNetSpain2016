@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Authentication.Cookies;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNet.Authentication.Cookies;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
@@ -41,7 +42,7 @@ namespace Authentication.Cookies
                 options.LoginPath = new PathString("/Account/Login");
                 options.AccessDeniedPath = new PathString("/Account/AccessDenied");
 
-                options.AutomaticAuthenticate = false;
+                options.AutomaticAuthenticate = true;
                 options.AutomaticChallenge = true;
             });
 

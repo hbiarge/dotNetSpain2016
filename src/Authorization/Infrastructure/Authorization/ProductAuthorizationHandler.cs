@@ -18,7 +18,7 @@ namespace Authorization.Infrastructure.Authorization
         protected override void Handle(
             AuthorizationContext context,
             OperationAuthorizationRequirement requirement,
-            Product resource)
+            Product product)
         {
             // Products can be handled only by sales people
             if (!context.User.HasClaim("department", "sales"))
@@ -29,7 +29,7 @@ namespace Authorization.Infrastructure.Authorization
             // Special products can be edited only by senior sales people
             if (requirement == ProductOperations.Edit)
             {
-                if (resource.ProductType == ProductType.Special)
+                if (product.ProductType == ProductType.Special)
                 {
                     if (!context.User.HasClaim("status", "senior"))
                     {
@@ -44,7 +44,7 @@ namespace Authorization.Infrastructure.Authorization
 
             if (discountRequirement != null)
             {
-                if (resource.ProductType == ProductType.Special)
+                if (product.ProductType == ProductType.Special)
                 {
                     if (!context.User.HasClaim("status", "senior"))
                     {
@@ -52,7 +52,7 @@ namespace Authorization.Infrastructure.Authorization
                     }
                 }
 
-                HandleDiscountOperation(context, discountRequirement, resource);
+                HandleDiscountOperation(context, discountRequirement, product);
 
                 return;
             }
@@ -64,11 +64,12 @@ namespace Authorization.Infrastructure.Authorization
         private void HandleDiscountOperation(
             AuthorizationContext context,
             DiscountOperationAuthorizationRequirement requirement,
-            Product resource)
+            Product product)
         {
-            var result = _discountPermissionService.IsDiscountAllowed(resource.Id, requirement.Amount);
+            var isAllowed = _discountPermissionService
+                .IsDiscountAllowed(product.Id, requirement.Amount);
 
-            if (result)
+            if (isAllowed)
             {
                 context.Succeed(requirement);
             }

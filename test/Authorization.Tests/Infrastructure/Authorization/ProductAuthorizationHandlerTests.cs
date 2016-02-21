@@ -20,7 +20,7 @@ namespace Authorization.Tests.Infrastructure.Authorization
         }
 
         [Fact]
-        public void Not_Senior_Not_Sales_Department_User_NOT_Allowed_To_Handle_Product()
+        public void Not_Senior_Not_Sales_Department_User_NOT_Allowed_To_Edit_Product()
         {
             var requirement = ProductOperations.Edit;
             var user = new ClaimsPrincipal(new ClaimsIdentity(Enumerable.Empty<Claim>(), "custom"));

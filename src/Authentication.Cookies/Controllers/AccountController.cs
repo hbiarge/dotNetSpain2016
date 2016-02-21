@@ -1,5 +1,4 @@
-﻿using System;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using Authentication.Cookies.ViewModels.Account;
 using Microsoft.AspNet.Authentication.Cookies;
@@ -17,6 +16,7 @@ namespace Authentication.Cookies.Controllers
         [AllowAnonymous]
         public IActionResult Login(string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
@@ -27,6 +27,7 @@ namespace Authentication.Cookies.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
             if (!ModelState.IsValid)
             {
                 return View(model);

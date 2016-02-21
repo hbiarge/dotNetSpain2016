@@ -28,9 +28,9 @@ namespace Authorization
                     policy.RequireAuthenticatedUser();
                     policy.RequireClaim("department", "sales");
                 });
-                options.AddPolicy(Policies.Over21, policy =>
+                options.AddPolicy(Policies.Over18, policy =>
                 {
-                    policy.Requirements.Add(new MinimumAgeRequirement(21));
+                    policy.Requirements.Add(new MinimumAgeRequirement(18));
                 });
             });
 
