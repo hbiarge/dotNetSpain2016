@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<h2>XSRF attack</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <a href="#" id="call-api">Call API</a>
+    </div>
+    <div class="panel-body" id="result">
+
+    </div>
+</div>
+
+@section scripts{
+
+    <script>
+        $(document).ready(function () {
+            $('#call-api').on('click', function (event) {
+                event.preventDefault();
+
+                $.ajax({
+                    url: 'http://localhost:4273/api/test',
+                    method: 'GET',
+                    xhrFields: {
+                        'withCredentials': true
+                    },
+                    crossDomain: true
+                }).success(function (response, status, xhr) {
+                    if ($('.container', response).length > 0) {
+                        $('#result').html('Redirected to login!');
+                    } else {
+                        var $dl = $('<dl></dl>');
+                        $.each(response, function (index, claim) {
+                            $dl.append($('<dt>' + claim.Type + '</dt>'));
+                            $dl.append($('<ds>' + claim.Value + '</ds>'));
+                        });
+                        $('#result').append($dl);
+                    }
+                });
+            });
+        });
+    </script>
+
+}
