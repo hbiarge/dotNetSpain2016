@@ -28,6 +28,8 @@
                     },
                     crossDomain: true
                 }).success(function (response, status, xhr) {
+                    $('#result').empty();
+
                     if ($('.container', response).length > 0) {
                         $('#result').html('Redirected to login!');
                     } else {
