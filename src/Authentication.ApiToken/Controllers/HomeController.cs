@@ -3,7 +3,7 @@ using Microsoft.AspNet.Mvc;
 
 namespace Authentication.Cookies.Controllers
 {
-    [Authorize]
+    [Authorize(ActiveAuthenticationSchemes = "Cookies")]
     public class HomeController : Controller
     {
         public IActionResult Index()

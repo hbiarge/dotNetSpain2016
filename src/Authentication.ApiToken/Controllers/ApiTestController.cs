@@ -7,7 +7,7 @@ using Microsoft.AspNet.Mvc;
 
 namespace Authentication.Cookies.Controllers
 {
-    [Authorize]
+    [Authorize(ActiveAuthenticationSchemes = "Bearer")]
     [Route("api/test")]
     public class ApiTestController : Controller
     {

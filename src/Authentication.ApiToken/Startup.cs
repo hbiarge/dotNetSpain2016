@@ -52,20 +52,20 @@ namespace Authentication.Cookies
                 options.LoginPath = new PathString("/Account/Login");
                 options.AccessDeniedPath = new PathString("/Account/AccessDenied");
 
-                options.AutomaticAuthenticate = true;
-                options.AutomaticChallenge = true;
+                options.AutomaticAuthenticate = false;
+                options.AutomaticChallenge = false;
             });
 
-            //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-            //app.UseJwtBearerAuthentication(new JwtBearerOptions
-            //{
-            //    AuthenticationScheme = "Bearer",
-            //    Authority = "https://login.windows.net/arosbi.onmicrosoft.com",
-            //    Audience = "69bb3e00-fa92-42ba-bb65-84de346fe0b0", // App client id
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            app.UseJwtBearerAuthentication(new JwtBearerOptions
+            {
+                AuthenticationScheme = "Bearer",
+                Authority = "https://login.windows.net/arosbi.onmicrosoft.com",
+                Audience = "69bb3e00-fa92-42ba-bb65-84de346fe0b0", // App client id
 
-            //    AutomaticAuthenticate = false,
-            //    AutomaticChallenge = false
-            //});
+                AutomaticAuthenticate = false,
+                AutomaticChallenge = false
+            });
 
             app.UseStaticFiles();
 
